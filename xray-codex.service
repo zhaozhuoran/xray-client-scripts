@@ -1,0 +1,35 @@
+[Unit]
+Description=Local HTTP proxy for Codex through VLESS TLS
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=xray-codex
+Group=xray-codex
+UMask=0077
+ExecStartPre=/usr/local/lib/xray-codex/xray run -test -config /etc/xray-codex/config.json
+ExecStart=/usr/local/lib/xray-codex/xray run -config /etc/xray-codex/config.json
+Restart=on-failure
+RestartSec=5s
+TimeoutStartSec=30s
+TimeoutStopSec=15s
+LimitNOFILE=65536
+StandardOutput=journal
+StandardError=journal
+UnsetEnvironment=HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY http_proxy https_proxy all_proxy no_proxy
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target

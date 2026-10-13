@@ -1,0 +1,61 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "codex-http",
+      "listen": "127.0.0.1",
+      "port": 17890,
+      "protocol": "http",
+      "settings": {
+        "allowTransparent": false,
+        "userLevel": 0
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "vless-out",
+      "protocol": "vless",
+      "settings": {
+        "address": "proxy.example.com",
+        "port": 443,
+        "id": "00000000-0000-0000-0000-000000000000",
+        "encryption": "none",
+        "flow": "",
+        "level": 0
+      },
+      "streamSettings": {
+        "network": "raw",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "proxy.example.com"
+        }
+      },
+      "mux": {
+        "enabled": false
+      }
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "codex-http"
+        ],
+        "outboundTag": "vless-out"
+      }
+    ]
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "handshake": 30,
+        "connIdle": 1800
+      }
+    }
+  }
+}

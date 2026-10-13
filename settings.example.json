@@ -1,0 +1,13 @@
+{
+  "server_address": "proxy.example.com",
+  "server_port": 443,
+  "uuid": "00000000-0000-0000-0000-000000000000",
+  "tls_server_name": "proxy.example.com",
+  "transport": "raw",
+  "flow": "",
+  "vless_encryption": "none",
+  "local_http_port": 17890,
+  "ws_path": "/vless",
+  "ws_host": "",
+  "grpc_service_name": "vless"
+}
